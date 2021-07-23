@@ -9,61 +9,16 @@
         <!-- small box -->
         <div class="small-box bg-info">
           <div class="inner">
-            <p>Jumlah Rapat</p>
+            <p>Department</p>
             <h3>{{$rapat}}</h3>
 
           </div>
           <div class="icon">
             <i class="fa fa-microphone"></i>
           </div>
-          <a href="{{route('rapat.index')}}" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+          <a href="{{route('department.index')}}" class="small-box-footer">More <i class="fas fa-arrow-circle-right"></i></a>
         </div>
-      </div>
-      <!-- ./col -->
-      <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-success">
-          <div class="inner">
-            <p>Angota DPRD</p>
-            <h3>{{$anggota}}</h3>
-
-          </div>
-          <div class="icon">
-            <i class="fa fa-user-circle"></i>
-          </div>
-          <a href=" {{route('anggota.index')}}" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      <!-- ./col -->
-      <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-warning">
-          <div class="inner">
-            <p>Sekretariat DPRD</p>
-            <h3>{{$pegawai}}</h3>
-
-          </div>
-          <div class="icon">
-            <i class="fa fa-users"></i>
-          </div>
-          <a href="{{route('pegawai.index')}}" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      <!-- ./col -->
-      <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-danger">
-          <div class="inner">
-            <p>Jenis Rapat</p>
-            <h3>{{$jenisRapat}}</h3>
-
-          </div>
-          <div class="icon">
-            <i class="ion ion-pie-graph"></i>
-          </div>
-          <a href="{{route('jenis-rapat.index')}}" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
+      </div>''
       <!-- ./col -->
     </div>
     <div class="row">

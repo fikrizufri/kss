@@ -8,9 +8,9 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Daftar {{ucwords(str_replace('-',' ',$title))}}</h3>
+          <h3 class="card-title"></h3>
           <a href="{{route($route.'.create')}}" class="btn btn-sm btn-primary float-right text-light">
-            <i class="fa fa-plus"></i> Tambah Data
+            <i class="fa fa-plus"></i> Add Data
           </a>
         </div>
         <!-- /.card-header -->
@@ -26,13 +26,13 @@
               @endforeach
 
               <div class="col-lg-3">
-                <label for="">Aksi</label>
+                <label for="">Action</label>
                 <div class="input-group">
 
 
                   <button type="submit" class="btn btn-warning">
                     <span class="fa fa-search"></span>
-                    Cari
+                    Search
                   </button>
                 </div>
               </div>
@@ -50,7 +50,7 @@
                 <th>{{ucfirst($header['name'])}}</th>
                 @endif
                 @endforeach
-                <th class="text-center">Aksi</th>
+                <th class="text-center">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -68,19 +68,19 @@
                   @endforeach
                   @endif
                   <a href="{{route($route.'.edit',$item->id)}}" class="btn btn-sm btn-warning text-light">
-                    <i class="nav-icon fas fa-edit"></i> Ubah</a>
+                    <i class="nav-icon fas fa-edit"></i> Edit</a>
                   <form id="form-{{$item->id}}" action="{{ route($route.'.destroy', $item->id)}}" method="POST" style="display: none;">
                     {{ csrf_field() }}
                     {{method_field('DELETE')}}
                   </form>
                   <button class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Hapus" onclick=deleteconf("{{$item->id}}")>
-                    <i class="fa fa-trash"></i> Hapus
+                    <i class="fa fa-trash"></i> Delete
                   </button>
                 </td>
               </tr>
               @empty
               <tr>
-                <td colspan="10">Data {{ucwords(str_replace('-',' ',$title))}} tidak ada</td>
+                <td colspan="10"> {{ucwords(str_replace('-',' ',$title))}} data does not exist</td>
               </tr>
               @endforelse
             </tbody>

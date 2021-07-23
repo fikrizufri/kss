@@ -144,7 +144,7 @@
                                         <th class="text-center">Nama</th>
                                         <th class="text-center">Jabatan</th>
 
-                                        <th class="text-center" width="20%">Aksi</th>
+                                        <th class="text-center" width="20%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="detailItem">
@@ -226,7 +226,7 @@
             </div>
             <div class="col-12">
                 <div class=" card-footer clearfix">
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </div>
             <!-- /.row -->

@@ -10,7 +10,7 @@
         <div class="card-header">
           <h3 class="card-title">Daftar {{ucwords(str_replace('-',' ',$title))}}</h3>
           <a href="{{route($route.'.create')}}" class="btn btn-sm btn-primary float-right text-light">
-            <i class="fa fa-plus"></i> Tambah Data
+            <i class="fa fa-plus"></i> Create Data
           </a>
         </div>
         <!-- /.card-header -->
@@ -26,13 +26,13 @@
               @endforeach
 
               <div class="col-lg-3">
-                <label for="">Aksi</label>
+                <label for="">Action</label>
                 <div class="input-group">
 
 
                   <button type="submit" class="btn btn-warning">
                     <span class="fa fa-search"></span>
-                    Cari
+                    Search
                   </button>
                 </div>
               </div>
@@ -51,7 +51,7 @@
                 @endif
                 @endforeach
                 <th class="text-center">Jumlah Peserta</th>
-                <th class="text-center">Aksi</th>
+                <th class="text-center">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -75,7 +75,7 @@
                   <a href="{{route($route.'.absen',$item->id)}}" class="btn btn-sm btn-primary text-light">
                     <i class="nav-icon fas fa-edit"></i> Absen</a>
                   <a href="{{route($route.'.edit',$item->id)}}" class="btn btn-sm btn-danger ">
-                    <i class="nav-icon fas fa-edit"></i> Ubah</a>
+                    <i class="nav-icon fas fa-edit"></i> Edit</a>
                   @endif
                   <a href="{{route($route.'.show',$item->id)}}" class="btn btn-sm btn-warning ">
                     <i class="nav-icon fas fa-edit"></i> Detail</a>

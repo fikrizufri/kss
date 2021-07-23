@@ -8,7 +8,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Tambah {{$title}}</h3>
+                    <h3 class="card-title">Create {{$title}}</h3>
                 </div>
                 <!-- /.card-header -->
                 <form action="{{ $action }}" method="post" role="form" enctype="multipart/form-data">
@@ -72,7 +72,7 @@
 
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>

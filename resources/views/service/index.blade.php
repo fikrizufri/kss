@@ -12,7 +12,7 @@
 
           @if(Auth()->user()->rule != 3)
           <a href="{{route('service.create')}}" class="btn btn-sm btn-primary float-right text-light">
-            <i class="fa fa-plus"></i>Tambah Data
+            <i class="fa fa-plus"></i>Create Data
           </a>
           @endif
         </div>
@@ -55,7 +55,7 @@
                   <input type="date" name="akhir" class="form-control" id=" akhir" value="{{$akhir}}">
                   <button type="submit" class="btn btn-warning">
                     <span class="fa fa-search"></span>
-                    Cari
+                    Search
                   </button>
                   <button type="button" class="btn btn-danger" id="print">
                     <span class="fa fa-print"></span>
@@ -79,7 +79,7 @@
                 <th>Total Jumlah</th>
                 <th>Sparepart</th>
                 <th>Status</th>
-                <th class="text-center" width="10%">Aksi</th>
+                <th class="text-center" width="10%">Action</th>
               </tr>
             </thead>
             <tbody>

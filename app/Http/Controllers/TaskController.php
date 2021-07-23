@@ -41,7 +41,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $title = "Tambah Task";
+        $title = "Create Task";
         $action = route('task.store');
         $route = 'task';
         return view('task.create', compact(
@@ -60,8 +60,8 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $messages = [
-            'required' => ':attribute tidak boleh kosong',
-            'unique' => ':attribute tidak boleh sama',
+            'required' => ':attribute can not be empty',
+            'unique' => ":attribute can't be the same",
         ];
 
         $this->validate($request, [
@@ -106,7 +106,7 @@ class TaskController extends Controller
         foreach ($data as $induk) {
             Permission::Create($induk);
         }
-        return redirect()->route('task.index')->with('message', 'Task Berhasil Ditambahkan')->with('Class', 'success');
+        return redirect()->route('task.index')->with('message', 'Task Berhasil DiCreatekan')->with('Class', 'success');
     }
 
     /**
@@ -128,7 +128,7 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        $title =  "Ubah Task " . $task->nama;
+        $title =  "Edit Task " . $task->nama;
         $action = route('task.update', $task->id);
         $route = "task";
         return view('task.edit', compact(
@@ -149,8 +149,8 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         $messages = [
-            'required' => ':attribute tidak boleh kosong',
-            'unique' => ':attribute tidak boleh sama',
+            'required' => ':attribute can not be empty',
+            'unique' => ":attribute can't be the same",
         ];
 
         $this->validate($request, [
@@ -174,7 +174,7 @@ class TaskController extends Controller
             $p->slug = \explode('-', $p->slug)[0] . "-" . $slug;
             $p->save();
         }
-        return redirect()->route('task.index')->with('message', 'Task Berhasil Ditambahkan')->with('Class', 'success');
+        return redirect()->route('task.index')->with('message', 'Task Berhasil DiCreatekan')->with('Class', 'success');
     }
 
     /**

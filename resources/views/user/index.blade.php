@@ -10,7 +10,7 @@
         <div class="card-header">
           <h3 class="card-title">Daftar {{$title}}</h3>
           <a href="{{route('user.create')}}" class="btn btn-sm btn-primary float-right text-light">
-            <i class="fa fa-plus"></i>Tambah Data
+            <i class="fa fa-plus"></i>Create Data
           </a>
         </div>
         <!-- /.card-header -->
@@ -22,7 +22,7 @@
                 <th>Username (NIK)</th>
                 <th>Nama</th>
                 <th>Email</th>
-                <th class="text-center" width="20%">Aksi</th>
+                <th class="text-center" width="20%">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -34,8 +34,8 @@
                 <td>{{$item->name}}</td>
                 <td>{{$item->email}}</td>
                 <td class="text-center">
-                  <a href="{{route('user.edit',$item->id)}}" class="btn btn-sm btn-warning text-light">
-                    <i class="nav-icon fas fa-edit"></i> Ubah</a>
+                  <a href="{{route('user.ubah',$item->id)}}" class="btn btn-sm btn-warning text-light">
+                    <i class="nav-icon fas fa-edit"></i> Edit</a>
                   <form id="form-{{$item->id}}" action="{{ route('user.destroy', $item->id)}}" method="POST" style="display: none;">
                     {{ csrf_field() }}
                     {{method_field('DELETE')}}
@@ -47,7 +47,7 @@
               </tr>
               @empty
               <tr>
-                <td colspan="10">Data Pengguna tidak ada</td>
+                <td colspan="10">Data User tidak ada</td>
               </tr>
               @endforelse
             </tbody>

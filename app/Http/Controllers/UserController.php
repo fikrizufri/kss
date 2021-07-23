@@ -28,7 +28,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $title =  "Pengguna";
+        $title =  "User";
         $dataUser = User::where('slug', '!=', 'superadmin')->paginate(15);
         return view('user.index', ["title" => $title, "dataUser" => $dataUser]);
     }
@@ -40,7 +40,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $title =  "Tambah Pengguna";
+        $title =  "Create User";
         $action = route('user.store');
         $roles = Role::where('slug', '!=', 'superadmin')->get();
         return view('user.create', compact(
@@ -59,9 +59,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $messages = [
-            'required' => ':attribute tidak boleh kosong',
-            'unique' => ':attribute tidak boleh sama',
-            'same' => 'Password dan konfirmasi password harus sama',
+            'required' => ':attribute can not be empty',
+            'unique' => ":attribute can't be the same",
+            'same' => 'Password and confirmation password must be the same',
         ];
 
         $this->validate(request(), [
@@ -86,7 +86,7 @@ class UserController extends Controller
         $user->save();
 
         $user->role()->attach($roles);
-        return redirect()->route('user.index')->with('message', 'User berhasil ditambah');
+        return redirect()->route('user.index')->with('message', 'User berhasil diCreate');
     }
 
     /**
@@ -104,12 +104,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function Edit(User $user)
     {
-        $title =  "Ubah Pengguna " . $user->nama;
+        $title =  "Edit User " . $user->nama;
         $action = route('user.update', $user->id);
         $roles = Role::where('slug', '!=', 'superadmin')->get();
-        return view('user.edit', compact(
+        return view('user.ubah', compact(
             'action',
             'title',
             'roles',
@@ -127,8 +127,8 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $messages = [
-            'required' => ':attribute tidak boleh kosong',
-            'unique' => ':attribute tidak boleh sama',
+            'required' => ':attribute can not be empty',
+            'unique' => ":attribute can't be the same",
             'same' => ':attribute password dan confrim password harus sama',
         ];
 
@@ -161,7 +161,7 @@ class UserController extends Controller
 
         $permission = Role::find($roles)->permissions()->pluck('id');
         $user->role()->sync($roles);
-        return redirect()->route('user.index')->with('message', 'User berhasil diubah');
+        return redirect()->route('user.index')->with('message', 'User berhasil diEdit');
     }
 
     /**
@@ -178,7 +178,7 @@ class UserController extends Controller
         if ($karyawan) {
             $karyawan->delete();
         }
-        return redirect()->route('user.index')->with('message', 'Pengguna berhasil dihapus');
+        return redirect()->route('user.index')->with('message', 'User berhasil dihapus');
     }
 
     /**
@@ -206,8 +206,8 @@ class UserController extends Controller
     {
         $user = User::find(Auth::user()->id);
         $messages = [
-            'required' => ':attribute tidak boleh kosong',
-            'unique' => ':attribute tidak boleh sama',
+            'required' => ':attribute can not be empty',
+            'unique' => ":attribute can't be the same",
             'min' => ':attribute harus lebih dari :min ',
             'same' => ':attribute password dan confrim password harus sama',
         ];
@@ -234,6 +234,6 @@ class UserController extends Controller
         $user->email = request()->input('email');
         $user->update();
 
-        return redirect()->route('home')->with('message', 'User berhasil diubah');
+        return redirect()->route('home')->with('message', 'User berhasil diEdit');
     }
 }

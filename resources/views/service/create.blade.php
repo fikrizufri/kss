@@ -115,7 +115,7 @@
 
                     </div>
                     <div class="card-footer clearfix ">
-                        <button type="submit" class="btn btn-primary float-right">Simpan</button>
+                        <button type="submit" class="btn btn-primary float-right">Save</button>
                     </div>
                 </div>
                 <!-- ./col -->

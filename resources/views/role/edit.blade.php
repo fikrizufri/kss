@@ -21,7 +21,7 @@
                                 <label for="Name" class=" form-control-label">Nama</label>
                             </div>
                             <div>
-                                <input type="text" name="name" placeholder="Nama Hak Akses" class="form-control  {{$errors->has('name') ? 'form-control is-invalid' : 'form-control'}}" value="{{$role->name}}" required id="">
+                                <input type="text" name="name" placeholder="Nama Roles" class="form-control  {{$errors->has('name') ? 'form-control is-invalid' : 'form-control'}}" value="{{$role->name}}" required id="">
                             </div>
                             @if ($errors->has('name'))nama
                             <span class="text-danger">
@@ -34,7 +34,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" rowspan="2" class="text-center" style="vertical-align:middle">Tugas</th>
-                                        <th scope="col" colspan="5" class="text-center">Hak Akses</th>
+                                        <th scope="col" colspan="5" class="text-center">Roles</th>
                                     </tr>
                                     <tr>
                                         <th scope="col" class="text-center">
@@ -43,7 +43,7 @@
                                         </th>
                                         <th scope="col" class="text-center">
 
-                                            Tambah
+                                            Create
                                         </th>
                                         <th scope="col" class="text-center">
 
@@ -86,7 +86,7 @@
 
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>

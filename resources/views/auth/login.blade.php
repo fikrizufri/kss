@@ -43,8 +43,8 @@
 <body class="hold-transition login-page bg">
   <div class="login-box">
     <div class="login-logo">
-      <img src="{{'template/dist/img/logo.png'}}" width="70%">
-      <h2 class="text-white"><b>E-Risalah <br> DPRD Kota Samarinda </b></h2>
+      <img src="{{'template/dist/img/logo.png'}}" width="40%">
+      <h2 class="text-white"><b>KSSGroup</b> <br> Employee Management System </h2>
 
     </div>
     <!-- /.login-logo -->

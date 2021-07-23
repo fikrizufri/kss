@@ -16,7 +16,7 @@ trait CrudTrait
     //abstract untuk header tabel
     abstract function configHeaders();
 
-    //abstract untuk pencarian
+    //abstract untuk penSearchan
     abstract function configSearch();
 
     //abstract untuk form
@@ -91,7 +91,7 @@ trait CrudTrait
         if ($this->configButton()) {
             $button = $this->configButton();
         }
-        //mulai pencarian --------------------------------
+        //mulai penSearchan --------------------------------
         $searches = $this->configSearch();
 
         foreach ($searches as $key => $val) {
@@ -100,7 +100,7 @@ trait CrudTrait
                 $query = $query->where($val['name'], 'like', '%' . $search[$key] . '%');
             }
         }
-        //akhir pencarian --------------------------------
+        //akhir penSearchan --------------------------------
         // relatio
         // sort by 
         if ($this->user) {
@@ -111,7 +111,7 @@ trait CrudTrait
         if ($this->sort) {
             $data = $query->orderBy($this->sort);
         }
-        //mendapilkan data model setelah query pencarian
+        //mendapilkan data model setelah query penSearchan
         $data = $query->paginate($paginate);
 
         // return $button;
@@ -141,9 +141,9 @@ trait CrudTrait
     {
         //nama title
         if (!isset($this->title)) {
-            $title =  "Tambah " . ucwords($this->route);
+            $title =  "Create " . ucwords($this->route);
         } else {
-            $title =  "Tambah " . ucwords($this->title);
+            $title =  "Create " . ucwords($this->title);
         }
 
         //nama route dan action route
@@ -260,7 +260,7 @@ trait CrudTrait
         }
 
         //redirect
-        return redirect()->route($this->route . '.index')->with('message', ucwords(str_replace('-', ' ', $this->route)) . ' Berhasil Ditambahkan')->with('Class', 'success');
+        return redirect()->route($this->route . '.index')->with('message', ucwords(str_replace('-', ' ', $this->route)) . ' Successfully Created')->with('Class', 'success');
     }
 
     /**
@@ -284,9 +284,9 @@ trait CrudTrait
     {
         $data = $this->model()->find($id);
         if (!isset($this->title)) {
-            $title =  "Ubah " . ucwords(str_replace('-', ' ', $this->route)) . ' - : ' . $data->nama;
+            $title =  "Edit " . ucwords(str_replace('-', ' ', $this->route)) . ' - : ' . $data->nama;
         } else {
-            $title =  "Ubah " . ucwords(str_replace('-', ' ', $this->title)) . ' - : ' . $data->nama;
+            $title =  "Edit " . ucwords(str_replace('-', ' ', $this->title)) . ' - : ' . $data->nama;
         }
 
         if (isset($this->manyToMany)) {
@@ -438,7 +438,7 @@ trait CrudTrait
             }
         }
 
-        return redirect()->route($this->route . '.index')->with('message', ucwords(str_replace('-', ' ', $this->route)) . ' Berhasil diubah')->with('Class', 'primary');
+        return redirect()->route($this->route . '.index')->with('message', ucwords(str_replace('-', ' ', $this->route)) . ' Edited Successfully')->with('Class', 'primary');
     }
 
     /**
@@ -460,7 +460,7 @@ trait CrudTrait
                 }
             }
         }
-        return redirect()->route($this->route . '.index')->with('message', ucwords(str_replace('-', ' ', $this->route)) . ' berhasil dihapus')->with('Class', 'danger');
+        return redirect()->route($this->route . '.index')->with('message', ucwords(str_replace('-', ' ', $this->route)) . ' successfully deleted')->with('Class', 'danger');
     }
 
 
@@ -472,10 +472,10 @@ trait CrudTrait
     public function getRequest($request, $id = null, $relationId = null)
     {
         $messages = [
-            'required' => 'tidak boleh kosong',
-            'unique' => 'tidak boleh sama',
-            'min' => 'harus minimal :min',
-            'max' => 'harus makasimal :max',
+            'required' => 'can not be empty',
+            'unique' => "can't be the same",
+            'min' => 'minimum :min',
+            'max' => 'maximum :max',
         ];
 
         $validation = [];

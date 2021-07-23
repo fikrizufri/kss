@@ -83,9 +83,9 @@
                             @endif
                         </div>
                         <div class="form-group ">
-                            <label for="rule">Hak Akses</label>
+                            <label for="rule">Roles</label>
                             <select name="rule" class="selected2 form-control" id="cmbrule" required>
-                                <option value="">--Pilih Hak Akses--</option>
+                                <option value="">--Pilih Roles--</option>
                                 @foreach ($roles as $role)
                                 <option value="{{$role->id}}" {{old('rule') == $role->id ? "selected" : "" }}>{{$role->name}}</option>
                                 @endforeach
@@ -100,7 +100,7 @@
 
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>
@@ -138,7 +138,7 @@
             //   $("#textid_rt").html("");
             // });
             $('#cmbrule').select2({
-                placeholder: '--- Pilih Hak Akses ---',
+                placeholder: '--- Pilih Roles ---',
                 width: '100%'
             });
 

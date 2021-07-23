@@ -34,7 +34,7 @@
                                         <th class="text-center">Nama</th>
                                         <th class="text-center">Jabatan</th>
 
-                                        <th class="text-center" width="20%">Aksi</th>
+                                        <th class="text-center" width="20%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="detailItem">
@@ -99,7 +99,7 @@
                                         <th>NIP</th>
                                         <th>Nama</th>
                                         <th>Jabatan</th>
-                                        <th>Aksi</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -202,7 +202,7 @@
                                     <label for="text" class=" form-control-label">Aksi</label>
                                 </div>
                                 <div class="clearfix">
-                                    <button type="button" id="tambahTamu" class="btn btn-primary btn-sm">Tambah</button>
+                                    <button type="button" id="CreateTamu" class="btn btn-primary btn-sm">Create</button>
                                 </div>
                             </div>
                         </div>
@@ -214,7 +214,7 @@
                                         <th>Nama</th>
                                         <th>Jabatan</th>
                                         <th>Instansi</th>
-                                        <th>Aksi</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -270,7 +270,7 @@
                 <div class="card">
 
                     <div class=" card-footer clearfix">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </div>
             </div>
@@ -394,18 +394,18 @@
             }
         });
 
-        $('#tambahTamu').click(function() {
+        $('#CreateTamu').click(function() {
             if ($("#nama").val() == "") {
                 $("#nama").addClass("is-invalid");
-                $("#textNama").html("Nama tidak boleh kosong");
+                $("#textNama").html("Nama can not be empty");
             }
             if ($("#jabatan").val() == "") {
                 $("#jabatan").addClass("is-invalid");
-                $("#textJabatan").html("Jabatan tidak boleh kosong");
+                $("#textJabatan").html("Jabatan can not be empty");
             }
             if ($("#instansi").val() == "") {
                 $("#instansi").addClass("is-invalid");
-                $("#textInstansi").html("instansi tidak boleh kosong");
+                $("#textInstansi").html("instansi can not be empty");
             }
             var contentTamu = '';
             if ($("#nama").val() != "" && $("#jabatan").val() != "" && $("#instansi").val() != "") {

@@ -23,7 +23,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $title =  "Hak Akses";
+        $title =  "Roles";
         $dataRole = Role::where('slug', '!=', 'superadmin')->paginate(5);
         $route = 'role';
         return view('role.index', compact(
@@ -40,7 +40,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $title =  "Tambah Hak Akses";
+        $title =  "Create Roles";
         $action = route('role.store');
         $tasks = Task::all();
         return view('role.create', compact(
@@ -59,9 +59,9 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $messages = [
-            'required' => ':attribute tidak boleh kosong',
-            'unique' => ':attribute tidak boleh sama',
-            'same' => 'Password dan konfirmasi password harus sama',
+            'required' => ':attribute can not be empty',
+            'unique' => ":attribute can't be the same",
+            'same' => 'Password and confirmation password must be the same',
         ];
 
         $this->validate(request(), [
@@ -73,7 +73,7 @@ class RoleController extends Controller
         $role->name = $request->name;
         $role->save();
         $role->permissions()->attach($request->izin_akses);
-        return redirect()->route('role.index')->with('message', 'Hak Akses berhasil ditambah');
+        return redirect()->route('role.index')->with('message', 'Roles berhasil diCreate');
     }
 
     /**
@@ -95,7 +95,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        $title =  "Ubah Hak Akses " . $role->nama;
+        $title =  "Edit Roles " . $role->nama;
         $action = route('role.update', $role->id);
         $tasks = Task::all();
         $izin = $role->permissions->pluck('name')->toArray();
@@ -119,9 +119,9 @@ class RoleController extends Controller
     {
 
         $messages = [
-            'required' => ':attribute tidak boleh kosong',
-            'unique' => ':attribute tidak boleh sama',
-            'same' => 'Password dan konfirmasi password harus sama',
+            'required' => ':attribute can not be empty',
+            'unique' => ":attribute can't be the same",
+            'same' => 'Password and confirmation password must be the same',
         ];
 
         $this->validate(request(), [
@@ -133,7 +133,7 @@ class RoleController extends Controller
         $role->name = $request->name;
         $role->save();
         $role->permissions()->sync($request->izin_akses);
-        return redirect()->route('role.index')->with('message', 'Hak Akses berhasil diubah');
+        return redirect()->route('role.index')->with('message', 'Roles berhasil diEdit');
     }
 
     /**
@@ -146,6 +146,6 @@ class RoleController extends Controller
     {
         $role->delete();
         $role->permissions()->detach();
-        return redirect()->route('role.index')->with('message', 'Hak Akses berhasil dihapus');
+        return redirect()->route('role.index')->with('message', 'Roles berhasil dihapus');
     }
 }

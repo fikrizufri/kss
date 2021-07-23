@@ -97,7 +97,7 @@
                             @endif
                         </div>
                         <div class="form-group ">
-                            <label for="rule">Hak Akses </label>
+                            <label for="rule">Roles </label>
                             <select name="rule" class="selected2 form-control" id="cmbrule">
                                 @foreach ($roles as $role)
                                 <option value="{{$role->id}} " {{$user->hasRole($role->slug) == 1 ? 'selected' : 'bebel' }}>{{$role->name}}</option>
@@ -105,7 +105,7 @@
                             </select>
                             @if ($errors->has('rule'))
                             <span class=" text-danger">
-                                <strong id="textrule">Hak Akses salah</strong>
+                                <strong id="textrule">Roles salah</strong>
                             </span>
                             @endif
 
@@ -114,7 +114,7 @@
 
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>

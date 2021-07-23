@@ -10,7 +10,7 @@
         <div class="card-header">
           <h3 class="card-title">Daftar {{$title}}</h3>
           <a href="{{route($route.'.create')}}" class="btn btn-sm btn-primary float-right text-light">
-            <i class="fa fa-plus"></i>Tambah Data {{$title}}
+            <i class="fa fa-plus"></i>Create Data {{$title}}
           </a>
         </div>
         <!-- /.card-header -->
@@ -26,13 +26,13 @@
               @endforeach
 
               <div class="col-lg-3">
-                <label for="">Aksi</label>
+                <label for="">Action</label>
                 <div class="input-group">
 
 
                   <button type="submit" class="btn btn-warning">
                     <span class="fa fa-search"></span>
-                    Cari
+                    Search
                   </button>
                 </div>
               </div>
@@ -46,7 +46,7 @@
                 @foreach ($configHeaders as $key => $header)
                 <th>{{ucfirst($header['name'])}}</th>
                 @endforeach
-                <th class="text-center" width="20%">Aksi</th>
+                <th class="text-center" width="20%">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -59,7 +59,7 @@
                 @endforeach
                 <td class="text-center">
                   <a href="{{route($route.'.edit',$item->id)}}" class="btn btn-sm btn-warning text-light">
-                    <i class="nav-icon fas fa-edit"></i> Ubah</a>
+                    <i class="nav-icon fas fa-edit"></i> Edit</a>
                   <form id="form-{{$item->id}}" action="{{ route($route.'.destroy', $item->id)}}" method="POST" style="display: none;">
                     {{ csrf_field() }}
                     {{method_field('DELETE')}}
