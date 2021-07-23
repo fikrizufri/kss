@@ -54,16 +54,34 @@ class UsersTableSeeder extends Seeder
         $taskUser = new Task();
         $taskUser->name = 'User';
         $taskUser->slug = Str::slug($taskUser->name);
-        $taskUser->description = 'Management User';
+        $taskUser->description = 'User Management ';
         $taskUser->save();
 
         $taskRole = new Task();
         $taskRole->name = 'Roles';
         $taskRole->slug = Str::slug($taskRole->name);
-        $taskRole->description = 'Management Roles ';
+        $taskRole->description = 'Roles Management';
         $taskRole->save();
 
-        $tasks = Task::all();
+        $taskDepartment = new Task();
+        $taskDepartment->name = 'Department';
+        $taskDepartment->slug = Str::slug($taskDepartment->name);
+        $taskDepartment->description = 'Department Management';
+        $taskDepartment->save();
+
+        $taskposition = new Task();
+        $taskposition->name = 'position';
+        $taskposition->slug = Str::slug($taskposition->name);
+        $taskposition->description = 'Position Management';
+        $taskposition->save();
+
+        $taskEmployee = new Task();
+        $taskEmployee->name = 'Employee';
+        $taskEmployee->slug = Str::slug($taskEmployee->name);
+        $taskEmployee->description = 'Employee Management';
+        $taskEmployee->save();
+
+        $tasks = Task::orderBy('name')->get();
 
         foreach ($tasks as $task) {
             $name = $task->name;
