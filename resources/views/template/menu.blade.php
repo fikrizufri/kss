@@ -39,12 +39,22 @@
           </a>
         </li>
         @endcan
-        @can('view-job')
-        <li class="nav-item {{ Request::segment(1) === 'job' ? 'menu-open' : '' }}">
-          <a href="{{route('job.index')}}" class="nav-link {{ Request::segment(1) === 'job'? 'active' : '' }}">
+        @can('view-position')
+        <li class="nav-item {{ Request::segment(1) === 'position' ? 'menu-open' : '' }}">
+          <a href="{{route('position.index')}}" class="nav-link {{ Request::segment(1) === 'position'? 'active' : '' }}">
             <i class="nav-icon fa fa-building"></i>
             <p>
-              Jobs
+              Positions
+            </p>
+          </a>
+        </li>
+        @endcan
+        @can('view-employee')
+        <li class="nav-item {{ Request::segment(1) === 'employee' ? 'menu-open' : '' }}">
+          <a href="{{route('employee.index')}}" class="nav-link {{ Request::segment(1) === 'employee'? 'active' : '' }}">
+            <i class="nav-icon fa fa-users"></i>
+            <p>
+              Employees
             </p>
           </a>
         </li>

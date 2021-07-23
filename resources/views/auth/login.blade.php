@@ -55,7 +55,7 @@
         <form method="POST" action="{{ route('login') }}">
           @csrf
           <div class="input-group mb-3">
-            <input type="text" class="form-control @error('username') is-invalid @enderror " placeholder="{{ __('Username / Nik') }}" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
+            <input type="text" class="form-control @error('username') is-invalid @enderror " placeholder="{{ __('Username') }}" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
 
 
 

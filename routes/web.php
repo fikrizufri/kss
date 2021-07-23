@@ -24,7 +24,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Master Data
     Route::resource('department', 'DepartmentController');
-    Route::resource('job', 'JobController');
+    Route::resource('position', 'PositionController');
+    Route::resource('employee', 'EmployeeController');
 
     Route::get('/Edituser', 'UserController@ubah')->name('user.ubah');
     Route::put('/simpanuser', 'UserController@simpan')->name('user.simpan');

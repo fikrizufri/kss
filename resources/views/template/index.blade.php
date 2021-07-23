@@ -39,7 +39,7 @@
             </div>
           </form>
           <br>
-          <table class="table table-bordered " id="example">
+          <table class="table table-bordered " id="datatablesinpu">
             <thead>
               <tr>
                 <th width="5%">No</th>
@@ -108,7 +108,7 @@
   </script>
   <script src="{{asset('template/plugins/datatables-bs4/js/dataTables.bootstrap4.js')}}"></script>
   <script>
-    $('#example').DataTable({
+    $('#datatablesinpu').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": false,

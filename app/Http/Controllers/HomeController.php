@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\Department;
+use App\Models\Employee;
+use App\Models\Position;
 use Auth;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
@@ -28,18 +30,14 @@ class HomeController extends Controller
     {
         $title =  "Dashboard";
 
-        $anggota = 1;
-        $pegawai = 1;
-        $rapat = 1;
-        $jenisRapat = 1;
-
-        // return Auth::user()->slug;
+        $department = Department::count();
+        $position = Position::count();
+        $employee = Employee::count();
         return view('home.index', compact(
             'title',
-            'pegawai',
-            'anggota',
-            'rapat',
-            'jenisRapat'
+            'department',
+            'employee',
+            'position'
         ));
     }
 }

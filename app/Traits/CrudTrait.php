@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 trait CrudTrait
 {
@@ -16,7 +17,7 @@ trait CrudTrait
     //abstract untuk header tabel
     abstract function configHeaders();
 
-    //abstract untuk penSearchan
+    //abstract untuk pencarian
     abstract function configSearch();
 
     //abstract untuk form
@@ -51,6 +52,9 @@ trait CrudTrait
 
     //many to many
     private $manyToMany;
+
+    //file
+    private $nameFile = '';
 
     // validation rule harus pkai object
     // tentukan jumlah col-sm boostrap
@@ -91,7 +95,7 @@ trait CrudTrait
         if ($this->configButton()) {
             $button = $this->configButton();
         }
-        //mulai penSearchan --------------------------------
+        //mulai pencarian --------------------------------
         $searches = $this->configSearch();
 
         foreach ($searches as $key => $val) {
@@ -100,7 +104,7 @@ trait CrudTrait
                 $query = $query->where($val['name'], 'like', '%' . $search[$key] . '%');
             }
         }
-        //akhir penSearchan --------------------------------
+        //akhir pencarian --------------------------------
         // relatio
         // sort by 
         if ($this->user) {
@@ -111,7 +115,7 @@ trait CrudTrait
         if ($this->sort) {
             $data = $query->orderBy($this->sort);
         }
-        //mendapilkan data model setelah query penSearchan
+        //mendapilkan data model setelah query pencarian
         $data = $query->paginate($paginate);
 
         // return $button;
@@ -141,9 +145,9 @@ trait CrudTrait
     {
         //nama title
         if (!isset($this->title)) {
-            $title =  "Create " . ucwords($this->route);
+            $title =  "Tambah " . ucwords($this->route);
         } else {
-            $title =  "Create " . ucwords($this->title);
+            $title =  "Tambah " . ucwords($this->title);
         }
 
         //nama route dan action route
@@ -179,8 +183,6 @@ trait CrudTrait
      */
     public function store(Request $request)
     {
-        // return $request->userAgent();
-
         //get dari post form
         $getRequest = $this->getRequest($request);
         // return $this->configForm();
@@ -201,6 +203,7 @@ trait CrudTrait
             $manyToMany  = null;
             $manyRelation  = null;
             $valueMany  = null;
+            // return $relation;
             foreach ($relation as $key => $value) {
                 try { //
                     $relationModels = '\\App\Models\\' . ucfirst($key);
@@ -214,16 +217,32 @@ trait CrudTrait
                             $valueMany[$manyToMany] = $val;
                             break;
                         }
+                        if (str_contains($colom, "isFile")) {
+                            $colomReplace = str_replace(' isFile', '', $colom);
+                            if (isset($colomReplace)) {
+                                $file =  $request->file($colomReplace);
+                                $nameFile = uniqid($key . '_') . '.' . $file->getClientOriginalExtension();
+                                $file->move(
+                                    base_path() . '/public/storage/' . $this->nameFolder . '/',
+                                    $nameFile
+                                );
+                                $relationModels->$colomReplace = $nameFile;
+                            }
+                            break;
+                        }
                         $relationModels->$colom = $val;
                     }
                     $relationModels->save();
                     if (isset($manyToMany)) {
                         $relationModels->$manyToMany()->attach($valueMany);
+                    } else {
+                        $relationsFields = $key . '_id';
+                        $data->$relationsFields = $relationModels->id;
                     }
-                    $relationsFields = $key . '_id';
-
-                    $data->$relationsFields = $relationModels->id;
-                } catch (\Throwable $th) { }
+                } catch (\Throwable $th) {
+                    // return redirect()->route($this->route . '.index')->with('message', ucwords(str_replace('-', ' ', $this->route)) . ' Ada yang salah')->with('Class', 'error');
+                    return $th;
+                }
             }
             // return $extraFrom;
         }
@@ -239,10 +258,29 @@ trait CrudTrait
             if ($index === "password") {
                 $item = bcrypt($item);
             }
+            if (is_array($index)) {
+                return $index;
+            }
+            if (str_contains($index, "isFile")) {
+                $colomReplace = str_replace(' isFile', '', $index);
+                // return $data->$colomReplace;
+                if (isset($colomReplace)) {
+                    $file =  $request->file($colomReplace);
+                    $nameFile = uniqid($this->route . '_') . '.' . $file->getClientOriginalExtension();
+
+                    if (Storage::disk('public')->exists($this->route . '/' . $data->$colomReplace)) {
+                        Storage::disk('public')->delete($this->route . '/' . $data->$colomReplace);
+                    }
+                    $request->file($colomReplace)->move(
+                        base_path() . '/public/storage/' . $this->route . '/',
+                        $nameFile
+                    );
+                    $data->$colomReplace = $nameFile;
+                }
+                break;
+            }
             $data->$index = $item;
         }
-
-        //apabila pkai id user
         if ($this->user && !isset($this->extraFrom)) {
             // return Auth::user()->id;
             $data->user_id = Auth::user()->id;
@@ -319,6 +357,7 @@ trait CrudTrait
         $store =  "update";
 
         $form = $this->configform();
+        $namaFile = $this->nameFile;
         $count = count($form);
 
         $colomField = $this->colomField($count);
@@ -335,6 +374,7 @@ trait CrudTrait
             'countColom',
             'countColomFooter',
             'title',
+            'namaFile',
             'form',
             'data'
         ));
@@ -376,7 +416,6 @@ trait CrudTrait
             $messages
         );
         //post ke model
-        // $this->model()->transaction();
         foreach ($form as $index => $item) {
             if ($index === "password") {
                 $item = bcrypt($item);
@@ -387,6 +426,24 @@ trait CrudTrait
                     $manyToMany = str_replace('_id', '', $index);
                     break;
                 }
+            }
+            if (str_contains($index, "isFile")) {
+                $colomReplace = str_replace(' isFile', '', $index);
+                // return $data->$colomReplace;
+                if (isset($colomReplace)) {
+                    $file =  $request->file($colomReplace);
+                    $nameFile = uniqid($this->route . '_') . '.' . $file->getClientOriginalExtension();
+
+                    if (Storage::disk('public')->exists($this->route . '/' . $data->$colomReplace)) {
+                        Storage::disk('public')->delete($this->route . '/' . $data->$colomReplace);
+                    }
+                    $request->file($colomReplace)->move(
+                        base_path() . '/public/storage/' . $this->route . '/',
+                        $nameFile
+                    );
+                    $data->$colomReplace = $nameFile;
+                }
+                break;
             }
             $data->$index = $item;
         }
@@ -450,6 +507,14 @@ trait CrudTrait
     public function destroy($id)
     {
         $data = $this->model()->find($id);
+        // return $this->nameFile;
+        if ($this->nameFile != '') {
+            // return 1;
+            $namaFile = $this->nameFile;
+            if (Storage::disk('public')->exists($this->route . '/' . $data->$namaFile)) {
+                Storage::disk('public')->delete($this->route . '/' . $data->$namaFile);
+            }
+        }
         $data->delete();
         if (isset($this->manyToMany)) {
             if (!isset($this->extraFrom)) {
@@ -460,7 +525,7 @@ trait CrudTrait
                 }
             }
         }
-        return redirect()->route($this->route . '.index')->with('message', ucwords(str_replace('-', ' ', $this->route)) . ' successfully deleted')->with('Class', 'danger');
+        return redirect()->route($this->route . '.index')->with('message', ucwords(str_replace('-', ' ', $this->route)) . ' Successfully Deleted')->with('Class', 'danger');
     }
 
 
@@ -471,20 +536,23 @@ trait CrudTrait
      */
     public function getRequest($request, $id = null, $relationId = null)
     {
+        // return $request;
+        $icon = $request->file('icon');
+
         $messages = [
-            'required' => 'can not be empty',
+            'required' => "can't not be empty",
             'unique' => "can't be the same",
             'min' => 'minimum :min',
             'max' => 'maximum :max',
+            'mimes' => 'File must be :values',
         ];
 
         $validation = [];
         $form = [];
         $relation = [];
 
-
+        // return $this->configForm();
         foreach ($this->configForm() as $index =>  $value) {
-            if (isset($value['extraForm'])) { }
 
             if (isset($value['validasi'])) {
                 $validasi = $value['validasi'];
@@ -499,13 +567,13 @@ trait CrudTrait
                                 $id = $relationId[$value['extraForm'] . '_id'];
                             }
                         }
-
+                        //unique
                         if ($item === 'unique') {
                             if ($id) {
 
-                                $unique = $tabelUnique  . ',' . $value['name'] . ',' . $id;
+                                $unique = $tabelUnique  . 's,' . $value['name'] . ',' . $id;
                             } else {
-                                $unique = $tabelUnique . ',' . $value['name'];
+                                $unique = $tabelUnique . 's,' . $value['name'];
                             }
 
                             $validasi[$index] = $unique;
@@ -530,11 +598,32 @@ trait CrudTrait
             }
 
             if (!isset($value['extraForm'])) {
-                $form[$value['name']] = $request->input($value['name']);
+                // if (isset($value['input']) == "img") {
+                //     $form[$value['name']] = $request->input($value['name']) . " apa ";
+                // } else {
+                // }
+                // $form[$value['name']] = $request->input($value['name']);
+                if (isset($value['input']) && $value['input'] == "img") {
+                    $reqFile = $value['name'];
+                    $file = $request->file($reqFile);
+                    $form[$value['name'] . " isFile"] = $file;
+                } else if (isset($value['input']) && $value['input'] == "file") {
+                    $reqFile = $value['name'];
+                    $file = $request->file($reqFile);
+                    $form[$value['name'] . " isFile"] = $file;
+                } else {
+                    $form[$value['name']] = $request->input($value['name']);
+                }
             } else {
                 foreach ($this->extraFrom as $realtion) {
                     if ($realtion == $value['extraForm']) {
-                        $relation[$realtion][$value['name']] = $request->input($value['name']);
+                        if (isset($value['input']) && $value['input'] == "img") {
+                            $reqFile = $value['name'];
+                            $file = $request->file($reqFile);
+                            $relation[$realtion][$value['name'] . " isFile"] = $file;
+                        } else {
+                            $relation[$realtion][$value['name']] = $request->input($value['name']);
+                        }
                     }
                 }
             }
@@ -550,7 +639,7 @@ trait CrudTrait
         ];
     }
 
-    public function combobox($table, $colom = null, $field = null, $operator = null, $sort = null, $appendModel = null, $colomAppend = null, $fieldAppend = null, $operatorAppend = null, $sortAppend = null)
+    public function combobox($table, $colom = null, $field = null, $operator = null, $sort = null, $appendModel = null, $colomAppend = null, $fieldAppend = null, $operatorAppend = null, $sortAppend = null, $valueAdd = null)
     {
         $model = '\\App\Models\\' . ucfirst($table);
         $model = new $model;
@@ -581,14 +670,15 @@ trait CrudTrait
 
         $data = [];
         foreach ($relationData as $key => $item) {
-            $nama = $item->nama;
-            if (!$nama) {
-                $nama = $item->name;
+            $name = $item->name;
+
+            if ($valueAdd != null) {
+                $name = $item->$valueAdd . " - " . $name;
             }
 
             $data[$key] = [
                 'id'    => $item->id,
-                'value'    => $nama,
+                'value'    => $name,
             ];
         }
 
@@ -600,7 +690,7 @@ trait CrudTrait
         if ($count < $this->kelipatan) {
             return 6;
         }
-        return 6;
+        return 12;
     }
 
     public function countColomFooter($count)
@@ -613,38 +703,28 @@ trait CrudTrait
 
     public function colomField($count)
     {
-        if ($count < $this->kelipatan * 2 && $count > $this->kelipatan) {
-            $count = $this->kelipatan * 2;
+        $data = [];
+        //jadikan data array
+        for ($k = 1; $k <= $count; $k++) {
+            $data[] = $k;
         }
-        if ($count < $this->kelipatan) {
-            $count = $this->kelipatan;
-        }
-        $lipat = $this->kelipatan;
-        $akhir = [];
-        $nomor = 0;
-        for ($i = 1; $i <= $count; $i++) {
 
-            if ($bagi = $i % $lipat == 0) {
-                $nomor++;
-                $akhir[$nomor] = $i;
+        $new_data = [];
+        $iter = 0;
+        $i = 0;
+
+        foreach ($data as $d) {
+
+            $new_data[$i][$iter] = $d;
+            $iter = $iter + 1;
+            if ($iter == 6) {
+                $i = $i + 1;
+                $iter = 0;
             }
         }
 
-        $sebelum = [];
-        $dataKedua = [];
-        $hasil = [];
-        foreach ($akhir as $key => $value) {
-            $jumlahsebelumnya = 0;
-            if ($key >= 2) {
-                $keysebelumya = $key - 1;
-                $jumlahsebelumnya =  $sebelum[$keysebelumya];
-            }
-            $sebelum[$key] = $value;
-            $dataKedua[$key] = $jumlahsebelumnya . ',' . $value;
-            $hasil[$key] = explode(",", $dataKedua[$key]);
-        }
 
-        return $hasil;
+        return $new_data;
     }
 
     public function configButton()

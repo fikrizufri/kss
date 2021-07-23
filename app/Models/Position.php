@@ -6,7 +6,7 @@ use App\Traits\UsesUuid;
 use Str;
 use Illuminate\Database\Eloquent\Model;
 
-class Job extends Model
+class Position extends Model
 {
     use UsesUuid;
     // mengnonaktifkan incrementing
@@ -23,7 +23,7 @@ class Job extends Model
 
     public function hasDepartment()
     {
-        return $this->belongsTo(Department::class, 'departments_id');
+        return $this->belongsTo(Department::class, 'department_id');
     }
 
     public function getDepartmentAttribute()

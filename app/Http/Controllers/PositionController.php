@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Job;
+use App\Models\Position;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Request;
 
-class JobController extends Controller
+class PositionController extends Controller
 {
     use CrudTrait;
 
     public function __construct()
     {
-        $this->route = 'job';
-        $this->title = "Job";
+        $this->route = 'position';
+        $this->title = "Position";
         $this->plural = 'true';
         $this->sort = 'name';
 
@@ -32,7 +32,7 @@ class JobController extends Controller
             ],
             [
                 'name'    => 'department',
-                'alias'    => 'Nama Department',
+                'alias'    => 'Department',
             ],
         ];
     }
@@ -43,6 +43,12 @@ class JobController extends Controller
                 'name'    => 'name',
                 'alias'    => 'Name',
             ],
+            [
+                'name'    => 'department_id',
+                'alias'    => 'Department',
+                'input'    => 'combo',
+                'value' => $this->combobox('Department', null, null, null, 'name'),
+            ],
         ];
     }
     public function configForm()
@@ -51,11 +57,11 @@ class JobController extends Controller
 
             [
                 'name'    => 'name',
-                'alias'    => 'Job Name',
-                'validasi'    => ['required'],
+                'alias'    => 'Position Name',
+                'validasi'    => ['required', 'unique'],
             ],
             [
-                'name'    => 'departments_id',
+                'name'    => 'department_id',
                 'input'    => 'combo',
                 'alias'    => 'Department',
                 'value' => $this->combobox('Department', null, null, null, 'name'),
@@ -66,6 +72,6 @@ class JobController extends Controller
 
     public function model()
     {
-        return new Job();
+        return new position();
     }
 }
