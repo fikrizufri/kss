@@ -86,6 +86,9 @@
             </tbody>
           </table>
         </div>
+        <div class="card-footer clearfix">
+          {{ $data->links() }}
+        </div>
         <!-- /.card-body -->
 
       </div>
@@ -109,11 +112,11 @@
   <script src="{{asset('template/plugins/datatables-bs4/js/dataTables.bootstrap4.js')}}"></script>
   <script>
     $('#datatablesinpu').DataTable({
-      "paging": true,
+      "paging": false,
       "lengthChange": false,
       "searching": false,
       "ordering": true,
-      "info": true,
+      "info": false,
       "autoWidth": false,
       columnDefs: [{
         orderable: false,

@@ -261,6 +261,26 @@ class EmployeeController extends Controller
                 'validasi'    => ['required'],
             ],
             [
+                'name'    => 'employe_level',
+                'input'    => 'combo',
+                'alias'    => 'Employe Level',
+                'value' => [
+                    [
+                        'id'    => 'junior',
+                        'value'    => 'junior',
+                    ],
+                    [
+                        'id'    => 'senior',
+                        'value'    => 'senior',
+                    ],
+                    [
+                        'id'    => 'staf',
+                        'value'    => 'staf',
+                    ],
+                ],
+                'validasi'    => ['required'],
+            ],
+            [
                 'name'    => 'position_id',
                 'input'    => 'combo',
                 'alias'    => 'Position',

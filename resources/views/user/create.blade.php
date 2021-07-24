@@ -16,10 +16,10 @@
                     <div class="card-body">
                         <div class="form-group">
                             <div>
-                                <label for="usernam" class=" form-control-label">Username (NIK)</label>
+                                <label for="usernam" class=" form-control-label">Username </label>
                             </div>
                             <div>
-                                <input type="text" name="username" placeholder="username (NIK)" class="form-control  {{$errors->has('username') ? 'form-control is-invalid' : 'form-control'}}" value="{{ old('username') }}" required>
+                                <input type="text" name="username" placeholder="username" class="form-control  {{$errors->has('username') ? 'form-control is-invalid' : 'form-control'}}" value="{{ old('username') }}" required>
                             </div>
                             @if ($errors->has('username'))
                             <div class=" container-fluid alert alert-warning alert-dismissible fade show" role="alert">

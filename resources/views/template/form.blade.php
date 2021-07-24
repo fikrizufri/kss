@@ -11,20 +11,20 @@
             {{ method_field('PUT') }}
             @endif
 
-            <!-- @foreach($colomField as $index => $value)
-            @endforeach -->
+            @foreach($colomField as $index => $value)
             <div class="col-md-{{$countColom}}">
                 <div class="card">
                     <!-- /.card-header -->
 
                     <div class="card-body">
-                        @foreach ($form as $key => $item)
+                        @foreach (array_slice($form, $value[0], $countColom) as $key => $item)
 
                         @include('template.input')
                         @endforeach
                     </div>
                 </div>
             </div>
+            @endforeach
 
             <!-- ./col -->
         </div>

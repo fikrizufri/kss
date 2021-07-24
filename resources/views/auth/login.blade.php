@@ -66,7 +66,7 @@
             </div>
             @error('username')
             <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
+              <strong>Username and password Failed</strong>
             </span>
             @enderror
           </div>

@@ -145,9 +145,9 @@ trait CrudTrait
     {
         //nama title
         if (!isset($this->title)) {
-            $title =  "Tambah " . ucwords($this->route);
+            $title =  "Create " . ucwords($this->route);
         } else {
-            $title =  "Tambah " . ucwords($this->title);
+            $title =  "Create " . ucwords($this->title);
         }
 
         //nama route dan action route
@@ -688,9 +688,9 @@ trait CrudTrait
     public function countColom($count)
     {
         if ($count < $this->kelipatan) {
-            return 6;
+            return 12;
         }
-        return 12;
+        return 6;
     }
 
     public function countColomFooter($count)
@@ -710,17 +710,27 @@ trait CrudTrait
         }
 
         $new_data = [];
-        $iter = 0;
+        $iter = 6;
         $i = 0;
 
         foreach ($data as $d) {
 
-            $new_data[$i][$iter] = $d;
-            $iter = $iter + 1;
             if ($iter == 6) {
-                $i = $i + 1;
-                $iter = 0;
+                $new_data[$i][] = $d - 1;
             }
+            if ($iter == 1) {
+                $new_data[$i][] = $d;
+            }
+            $iter = $iter - 1;
+            if ($iter == 0) {
+                $i = $i + 1;
+                $iter = 6;
+            }
+        }
+
+
+        if ($iter != 0) {
+            $new_data[$i][1] = $d;
         }
 
 

@@ -57,7 +57,11 @@ class LoginController extends Controller
     protected function validateLogin(Request $request)
     {
         $messages = [
-            'username.exists' => 'nik atau username tidak terdaftar',
+            'username.exists' => 'username is not registered',
+            'username.required' => 'The username is required.',
+            'username.username' => 'The username needs to have a valid format.',
+            'username.exists' => 'The username is not registered in the system.',
+            'username.password' => 'The username is not registered in the system.',
         ];
 
         $request->validate([

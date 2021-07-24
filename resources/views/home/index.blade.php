@@ -29,7 +29,7 @@
 
           </div>
           <div class="icon">
-            <i class="fa fa-building"></i>
+            <i class="fa fa-building "></i>
           </div>
           <a href="{{route('position.index')}}" class="small-box-footer">More <i class="fas fa-arrow-circle-right"></i></a>
         </div>
